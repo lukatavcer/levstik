@@ -11,8 +11,6 @@ from levstik.forms.create_winner_form import CreateWinnerForm
 class CreateWinnerView(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
-        user = request.user
-
         context = dict(
             form=CreateWinnerForm()
         )
@@ -22,12 +20,12 @@ class CreateWinnerView(LoginRequiredMixin, View):
     @staticmethod
     def post(request):
         user = request.user
-        form = CreateWinnerForm(request.POST)
+        form = CreateWinnerForm(request.POST, created_by=user)
 
         if form.is_valid():
             form.save()
 
-            messages.success(request, "Winner successfully created!")
+            messages.success(request, "Dobitnik je bil ustvarjen!")
             return HttpResponseRedirect(reverse('dashboard'))
 
         context = dict(

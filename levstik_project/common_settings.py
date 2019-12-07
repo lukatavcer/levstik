@@ -210,8 +210,7 @@ LOGGING = {
 
 # django_heroku.settings(locals())
 
-
-DATETIME_INPUT_FORMATS += ("%d/%m/%Y %H:%M",)
+DATETIME_INPUT_FORMATS += ("%d. %m. %Y",)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True

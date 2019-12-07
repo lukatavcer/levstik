@@ -15,7 +15,6 @@ urlpatterns = [
     path('about-us/', AboutUs.as_view(), name="about_us"),
     path('register/', RegisterView.as_view(), name="register"),
     path('profile/', ProfileView.as_view(), name="profile"),
-    # path('request-provider-status/', RequestProviderStatusView.as_view(), name="request_provider_status"),
     # path('dashboard/', DashboardView.as_view(), name="dashboard"),
     path('winner/', CreateWinnerView.as_view(), name="create_winner"),
     # path('winner/<slug:slug>/', WinnerPublicProfileView.as_view(), name="public_profile"),
