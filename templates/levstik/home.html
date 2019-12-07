@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static i18n humanize %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"
+            integrity="sha256-H9jAz//QLkDOy/nzE9G4aYijQtkLt9FvGmdUTwBk6gs=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"
+            integrity="sha256-JIBDRWRB0n67sjMusTy4xZ9L09V8BINF0nd/UUUOi48=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"
+          integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+    <style>
+        .header {
+            min-height: 40vh;
+            background-image: url({% static 'img/levstik-background2.jpg' %});
+            background-position: center;
+            background-size: cover;
+            transition: height 999999s;
+            color: white;
+        }
+
+        .header a {
+            color: white;
+        }
+        .card-img-top {
+            margin: auto;
+            height: 300px;
+            width: 300px;
+        }
+    </style>
+{% endblock %}
+
+{% block navbar %}
+    <div class="header">
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
+            <h5 class="my-0 mr-md-auto font-weight-normal">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'img/favicon-trans.png' %}" height="45px" class="mb-3 mr-2">
+                    Levstik.si
+                </a>
+            </h5>
+            <nav class="mr-md-3">
+                <a class="p-2" href="{% url 'home' %}">Domov</a>
+                <a class="p-2" href="{% url 'winners' %}">Dobitniki</a>
+
+                {% if user.is_authenticated %}
+                    <a class="p-2" href="{% url 'profile' %}">Profil</a>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Odjava</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url 'register' %}">Registracija</a>
+                    <a class="btn btn-primary ml-1" href="{% url 'login' %}">Prijava</a>
+                {% endif %}
+            </nav>
+        </div>
+        <div class="container text-center pt-3 pb-3">
+            <div class="col-md-12">
+                <h1>Dobitniki Levstikove nagrade</h1>
+            </div>
+            <div class="col-md-12 pb-3">
+                <h5>
+                    Levstikova nagrada je nagrada, ki jo od leta 1949 Založba Mladinska knjiga podeljuje za dosežke na področju otroške in mladinske književnosti avtorjem, ki objavljajo pri tej založbi. Do leta 1991 so nagrado podeljevali enkrat letno, od tedaj pa bienalno.
+                </h5>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row primary pb-5">
+            <div class="col-md-12 text-center mt-5 mb-5">
+                <h2 class="mb-0" style="color: white">
+                    Dobitniki nagrade
+                </h2>
+            </div>
+            <div class="col-md-12">
+                <div class="card-deck">
+                  <div class="card">
+                    <img class="card-img-top" src="{% static 'img/levstik2.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top" src="{% static 'img/levstik2.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top" src="{% static 'img/levstik2.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top" src="{% static 'img/levstik2.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                  </div>
+                    <div class="card">
+                    <img class="card-img-top" src="{% static 'img/levstik2.jpg' %}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

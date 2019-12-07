@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+{% block title %}Registracija{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="login-form register">
+        <form method="post">
+            {% csrf_token %}
+            <h2 class="text-center">Ustvari račun</h2>
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <div class="form-group mt-3 mb-4">
+                <button onclick="mixpanel.track('User register')" type="submit" class="btn btn-primary btn-lg btn-block">Registracija</button>
+            </div>
+
+            <a href="/accounts/google/login/" class="btn btn-google btn-lg social-btn"><i class="fab fa-google-plus-g fa-fw"></i> Prijava z Google</a>
+            <a href="/accounts/facebook/login/" class="btn btn-facebook btn-lg social-btn"><i class="fab fa-facebook-f fa-fw"></i> Prijava z Facebook</a>
+        </form>
+        <p class="text-center small">Že imaš račun? <a href="{% url 'login' %}"><strong>Prijavi se tukaj!</strong></a></p>
+        {% if form.errors %}
+            <div class="form-errors alert alert-danger">
+                <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error|escape }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

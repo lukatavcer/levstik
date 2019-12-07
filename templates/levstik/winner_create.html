@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% load static i18n humanize %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"
+          integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .step__number__circle {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 100px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #000000;
+            text-align: center;
+        }
+
+        .step__number__title {
+            font-size: 20px;
+            font-family: "Nunito", sans-serif;
+            font-weight: 700;
+            line-height: 0.7;
+            color: #000000;
+            padding-top: 5px;
+        }
+
+        .step__box {
+            border-radius: 3px;
+            background-color: #ffffff;
+            min-height: 30px;
+        }
+
+        .step__box__select {
+            margin-top: 18px;
+            margin-bottom: 18px;
+            height: 46px;
+        }
+
+        .step__box__select select {
+            padding-left: 39%;
+        }
+
+        .orderSelect {
+            width: 240px;
+            height: 42px;
+            border: 1px solid #979797;
+            border-radius: 3px;
+            padding-left: 13%;
+            font-size: 16px;
+            color: #000000;
+            background: #fff url("{% static "img/drop.png" %}") no-repeat 95% 50%;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .step__summary {
+            background-color: #ffffff;
+            border-radius: 3px;
+            padding-bottom: 11px;
+        }
+
+        .nextButton {
+            min-height: 42px;
+            width: 100%;
+            border-radius: 3px;
+            border-color: #4cb994;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: #ffffff;
+            -webkit-appearance: none;
+            background-repeat: no-repeat;
+            background-size: 9px 14px;
+            background-position: right 13px center;
+            transition: .5s;
+        }
+
+        .step__scoreBox {
+            background-color: rgba(255, 255, 255, 0.91);
+            padding-top: 20px;
+            padding-bottom: 15px;
+            margin-top: 7px;
+        }
+
+        .step__summary {
+            background-color: #ffffff;
+            border-radius: 3px;
+            padding-bottom: 11px;
+        }
+
+        .fa-star {
+            color: gold;
+        }
+
+        .data-row {
+            margin-left: -30px;
+            padding-bottom: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-md-8">
+                <form class="form " action="{% url 'create_job' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row data-row">
+                        <div class="col-1">
+                            <div class="step__number__circle">
+                                <span>1.</span>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <div class="step__number__title">
+                                Kako velika je vaša zelenica?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 step__box full p-1">
+                            <div class="col-md-4 offset-4 step__box__select">
+                                <select id="select-area" name="area" class="orderSelect text-center">
+                                    <option value="100"> do 100m<sup>2</sup></option>
+                                    <option value="200"> do 250m<sup>2</sup></option>
+                                    <option value="500"> do 500m<sup>2</sup></option>
+                                    <option value="1000"> do 1000m<sup>2</sup></option>
+                                    <option value="2000"> do 2000m<sup>2</sup></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-4 data-row">
+                        <div class="col-1">
+                            <div class="step__number__circle">
+                                <span>2.</span>
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <div class="step__number__title">
+                                Izpolnite vaše podatke
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 step__box full" style="padding-top: 15px;">
+                            {% for field in form.visible_fields %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-2"></div>
+                                        <div class="col-8">
+                                            <strong>
+                                                {{ field.label_tag }}
+                                            </strong>
+                                            {{ field }}
+                                            {{ field.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mt-3 mb-3 offset-6">
+                            <button onclick="mixpanel.track('Submit order')" class="nextButton btn btn-primary float-right">
+                                Oddaj naročilo
+                                <i class="fas fa-chevron-right pl-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div id="Summary" class="col-md-4">
+                <div class="col-md-12  step__summary" style="margin-top: 45px;">
+                    <div class="row">
+                        <div class="col-md-12 pt-3 text-center pb-3"><strong>Vaše naročilo</strong></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 pt-2">Velikost:</div>
+                        <div class="col-md-5">
+                            <span id="SelectedSize">do 100m<sup>2</sup></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 ">Skupaj za plačilo</div>
+                        <div class="col-md-4 big">
+                            <span id="price">19.95</span> €
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12  step__summary" style="margin-top: 13px;">
+                    <div class="row">
+                        <div class="col-md-12 pt-3 text-center pb-3"><strong>Akcija</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">Na naročila nad 500m<sup>2</sup> boste dobili 5% popust.</div>
+                    </div>
+                </div>
+
+                <div class="col-md-12  step__scoreBox" style="margin-top: 39px;">
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <div class="averageScore d-inline">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <strong class="pl-3">4,8</strong>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-12 step__scoreBox__caption ">Popvrečna ocena kupcev prejšnjega meseca.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/datetimepicker/locales/sl.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            let now = new Date("{% now 'Y,n,j' %}, 12:00");
+
+            $('#id_date').datetimepicker({
+                sideBySide: true,
+                format: 'DD/MM/YYYY HH:mm',
+                defaultDate: now,
+                locale: 'sl',
+            });
+        });
+
+    </script>
+
+    <script>
+        $('#select-area').on('change', function() {
+            let val = $(this).val();
+            let discount = 1;
+            if (val >= 90) {
+                discount = 0.95;
+            }
+            let price = (val * 0.21 * discount).toFixed(2);
+            $('#price').text(price);
+            $('#id_area').val(price);
+        });
+    </script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

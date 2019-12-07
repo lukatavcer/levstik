@@ -1,0 +1,31 @@
+<div class="card mb-4 box-shadow mx-0">
+    <div class="card-header my-0" style="font-size: 17px;">
+        {% if provider.provider_public_profile.company_name %}
+            {{ provider.provider_public_profile.company_name }}
+        {% else %}
+            {{ provider.email|default:"/" }}
+        {% endif %}
+        <div class="d-inline float-right">
+            {% if provider.provider_public_profile.rating %}
+                <i class="fas fa-star active"></i>
+                {{ provider.provider_public_profile.rating }} / <small>{{ provider.provider_public_profile.review_count }} ocen</small>
+            {% else %}
+                <i class="fas fa-star"></i>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body pt-1">
+        <ul class="list-unstyled mt-3">
+            {% if request.user.is_authenticated %}
+            <li><strong class="mr-3">E-pošta:</strong> {{ provider.email }} </li>
+            {% endif %}
+            <li><strong class="mr-2">Spletna stran:</strong> {{ provider.provider_public_profile.website|default_if_none:"/" }}</li>
+            <li>{{ provider.provider_public_profile.description|default_if_none:"" }}</li>
+        </ul>
+        {% if provider.provider_public_profile.price %}
+            <hr>
+            <h4 class="card-title text-center">{{ provider.provider_public_profile.price }} € <small class="text-muted">/ povprečna cena</small></h4>
+        {% endif %}
+        <a type="button" class="btn btn-block btn-primary mt-3" href="{{ provider.provider_public_profile.url }}">Poglej profil</a>
+    </div>
+</div>

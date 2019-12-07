@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1>Dobitniki</h1>
+    <p class="lead">Vsi dobitniki Levstikove nagrade od leta 1920</p>
+</div>
+
+<div class="container" style="min-height: 480px;">
+    <div class="card-deck mb-3">
+        <div class="row m-auto w-100">
+            {% for provider in providers %}
+                <div class="col-4">
+                    {% include 'providers/provider_card.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

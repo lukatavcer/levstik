@@ -1,0 +1,94 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SITE TITTLE -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}Levstik.si - Dobitniki Levstikove nagrade{% endblock %}
+    </title>
+
+    <!-- CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+
+    <!-- CUSTOM CSS -->
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    <!-- FAVICON -->
+    <link href="{% static 'img/favicon.ico' %}" rel="shortcut icon">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+{% block navbar %}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/favicon.ico' %}" height="40px" class="pr-2"
+                     style="position: relative; top: -7px;">
+                Levstik.si
+            </a>
+        </h5>
+        <nav class="mr-md-3">
+            <a class="p-2 text-dark" href="{% url 'home' %}">Domov</a>
+            <a class="p-2 text-dark" href="{% url 'winners' %}">Dobitniki</a>
+            {% if user.is_authenticated %}
+                <a class="p-2 text-dark" href="{% url 'profile' %}">Profil</a>
+                <a class="btn btn-outline-primary" href="{% url 'logout' %}">Odjava</a>
+            {% else %}
+
+                <a class="btn btn-outline-primary" href="{% url 'register' %}">Registracija</a>
+                <a class="btn btn-outline-primary ml-1" href="{% url 'login' %}">Prijava</a>
+            {% endif %}
+        </nav>
+    </div>
+{% endblock %}
+
+{% if messages %}
+    <ul class="messages mt-3">
+        {% for message in messages %}
+            <li{% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show"{% endif %}
+                                     role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+    <div class="container">
+        <footer class="pt-4 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md text-center">
+                    <img class="mb-2" src="{% static 'img/favicon.ico' %}" height="30px">
+                    <small class="d-block mb-3 text-muted">© 2019</small>
+                </div>
+                <div class="col-6 col-md text-center">
+                    <a class="text-muted" href="#">Zasebnost</a>
+                </div>
+                <div class="col-6 col-md text-center">
+                    <a class="text-muted" href="#">Pogosta vprašanja</a>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+{% endblock %}
+
+<!-- JAVASCRIPT -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/fontawesome.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>
