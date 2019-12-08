@@ -30,7 +30,7 @@ a:hover {
     margin: 0 auto;
     padding: 120px 0 240px 0;
     text-align: center;
-    color: #7e2229;
+    color: #6e1119;
 }
 
 .login-form.register {
@@ -61,13 +61,13 @@ a:hover {
 .login-form .btn {
     font-size: 16px;
     font-weight: bold;
-    background: #7e2229;
+    background: #6e1119;
     border: none;
 }
 
 .login-form .btn:hover,
 .login-form .btn:focus {
-    background: #7e2229;
+    background: #6e1119;
 }
 
 .login-form form a {
@@ -91,35 +91,35 @@ nav a {
 
 /* BOOTSTRAP COLOR OVERRIDE */
 .btn-primary {
-    background: #7e2229;
-    border-color: #7e2229;
+    background: #6e1119;
+    border-color: #6e1119;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary:hover {
-    background: #883033;
-    border-color: #883033;
+    background: #7e121b;
+    border-color: #7e121b;
     box-shadow: none;
 }
 
 .btn-outline-primary {
-    color: #7e2229;
-    border-color: #7e2229;
+    color: #6e1119;
+    border-color: #6e1119;
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .btn-outline-primary:focus,
 .btn-outline-primary:active,
 .btn-outline-primary:hover {
-    background: #7e2229;
-    border-color: #7e2229;
+    background: #6e1119;
+    border-color: #6e1119;
     box-shadow: none;
 }
 
 a {
-    color: #7e2229;
+    color: #6e1119;
 }
 
 ul.errorlist {
