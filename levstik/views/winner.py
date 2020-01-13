@@ -20,13 +20,13 @@ class CreateWinnerView(LoginRequiredMixin, View):
     @staticmethod
     def post(request):
         user = request.user
-        form = CreateWinnerForm(request.POST, created_by=user)
+        form = CreateWinnerForm(request.POST, request.FILES, created_by=user)
 
         if form.is_valid():
             form.save()
 
             messages.success(request, "Dobitnik je bil ustvarjen!")
-            return HttpResponseRedirect(reverse('dashboard'))
+            return HttpResponseRedirect(reverse('home'))
 
         context = dict(
             form=form

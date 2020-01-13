@@ -1,6 +1,137 @@
 {% extends "base.html" %}
 {% load static i18n humanize %}
 
+{% block navbar %}
+    <div class="header">
+        <div class="header-inside">
+            <div class="d-flex flex-column flex-md-row align-items-center p-1 p-lg-3 px-md-4 mb-3 navbar-dark" id="mainNav">
+                <h5 class="my-0 mr-md-auto ">
+                    <a href="{% url 'home' %}" class="navbar-brand">
+                        <img src="{% static 'img/favicon-trans2.png' %}" height="45px" class="mb-3 mr-1" style="position: relative; top: 7px;">
+                        <span class="brand-text">
+                            Levstik.si
+                        </span>
+                    </a>
+                </h5>
+                <nav class="mr-md-3">
+                    <a class="p-2 link-nav" href="{% url 'home' %}">DOMOV</a>
+
+                    {% if user.is_authenticated %}
+                        <a class="p-2 link-nav" href="{% url 'create_winner' %}">
+                            <i class="fas fa-plus"></i>
+                            DODAJ DOBITNIKA
+                        </a>
+                        <a class="p-2 link-nav" href="{% url 'profile' %}">PROFIL</a>
+                        <a class="btn btn-primary" href="{% url 'logout' %}">ODJAVA</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url 'register' %}">REGISTRACIJA</a>
+                        <a class="btn btn-primary ml-1" href="{% url 'login' %}">PRIJAVA</a>
+                    {% endif %}
+                </nav>
+            </div>
+            <div class="container text-center pt-3 pb-3" style="flex: 1;">
+                <div>
+                    <div class="col-md-12">
+                        <h1 class="header-title gold">Levstikova nagrada</h1>
+                    </div>
+                    <div class="col-md-12 pt-3 pb-3">
+                        <h5>
+                            Levstikova nagrada je nagrada, ki jo od leta 1949 Založba Mladinska knjiga podeljuje za dosežke na področju otroške in
+                            mladinske književnosti avtorjem, ki objavljajo pri tej založbi. Do leta 1991 so nagrado podeljevali enkrat letno, od tedaj
+                            pa
+                            bienalno.
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <section class="primary">
+        <div class="container py-2">
+            <div class="row pt-5 pb-5">
+                <div class="col-md-12 text-center mb-4">
+                    <h2 class="gold">
+                        O nagradi
+                    </h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-deck text-white text-center">
+                        <p class="text-center">
+                            Nagrada nosi ime po slovenskem književniku <strong>Franu Levstiku</strong>. Podeljuje se več Levstikovih nagrad:
+                        </p>
+                        <ul class="m-auto text-justify">
+                            <li>Levstikova nagrada za izvirno ilustracijo,</li>
+                            <li>Levstikova nagrada za izvirno leposlovno delo,</li>
+                            <li>Levstikova nagrada za stvarno literaturo,</li>
+                            <li>Levstikova nagrada za življenjsko delo.</li>
+                        </ul>
+                        <p class="mt-3">
+                            Nagrada za življenjsko delo se podeljuje od leta 1999 in se podeli dvema osebama; piscu literature za otroke in mladino
+                            ter ilustratorju. Kandidata za Levstikovo nagrado izbere posebej določena žirija.
+                        </p>
+                        <p>
+                            Levstikove nagrade so bile prve založniške nagrade po drugi svetovni vojni. Ustanovni namen spodbujanja slovenskih
+                            književnikov, slikarjev in tudi znanstvenikov k ustvarjanju za mladino se je uresničil. Tradicija podeljevanja nagrad je
+                            prispevala k razvoju otroške in mladinske književnosti na Slovenskem. S podeljevanjem se kaže temeljno prizadevanje
+                            Mladinske knjige, da skrbi za izvirne ter kakovostne knjige za otroke in mladino.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="mb-5">Dobitniki Levstikove nagrade</h2>
+                {#                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>#}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="timeline">
+                    {% if user.is_authenticated %}
+                        <li>
+                        <a href="{% url 'create_winner' %}">
+
+                            <div class="timeline-image">
+                                <h4 class="text-black">
+                                    <i class="fas fa-plus" style="font-size: 2rem;"></i><br />
+                                    <strong style="font-size: 1.3rem; line-height: 35px;">
+                                        DODAJ
+                                    </strong>
+                                </h4>
+                            </div>
+                        </a>
+                        </li>
+                    {% endif %}
+                    {% for winner in winners %}
+                        <li{% if forloop.counter|divisibleby:2 %} class="timeline-inverted"{% endif %}>
+                            <img class="timeline-image rounded-circle img-fluid" src="{{ winner.image.url }}" alt="">
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h5 class="text-muted">{{ winner.awarded_date|date:"F Y" }}</h5>
+                                    <h4 class="subheading cursive">{{ winner.full_name }}</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">{{ winner.description }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
 {% block extra_js %}
     {{ block.super }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"
@@ -9,6 +140,30 @@
             integrity="sha256-JIBDRWRB0n67sjMusTy4xZ9L09V8BINF0nd/UUUOi48=" crossorigin="anonymous"></script>
     <script src="{% static 'js/datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
 
+    <script>
+        $(function () {
+            // Activate scrollspy to add active class to navbar items on scroll
+            $('body').scrollspy({
+                target: '#mainNav',
+                offset: 56
+            });
+
+            // Collapse Navbar
+            var navbarCollapse = function () {
+                let $nav = $("#mainNav");
+                if ($(document).scrollTop() > 55) {
+                    $nav.addClass("navbar-shrink fixed-top");
+                } else {
+                    $nav.removeClass("navbar-shrink fixed-top");
+                }
+            };
+            // Collapse now if page is not at top
+            navbarCollapse();
+            // Collapse the navbar when page is scrolled
+            $(window).scroll(navbarCollapse);
+        });
+
+    </script>
 {% endblock %}
 
 {% block extra_css %}
@@ -17,26 +172,56 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"
           integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous"/>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+
     <style>
+        .subheading {
+            font-size: 1.7rem;
+        }
+
+        h1, h2,
+        .cursive,
+        #mainNav .navbar-brand {
+            font-family: 'Kaushan Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        }
+
+        h2 {
+            font-size: 2.4rem;
+        }
+
+        .gold {
+            color: #fed136;
+        }
+
+        ul {
+            font-size: 1.2rem;
+        }
+
+        p {
+            width: 100%;
+            font-size: 1.2rem;
+        }
+
         .header {
-            min-height: 40vh;
-            {#background-image: url({% static 'img/levstik-background2.jpg' %});#}
-            {#background-position: center;#}
-            {#background-size: cover;#}
-            transition: height 999999s;
+            min-height: 45vh;
+        {#background-image: url({% static 'img/levstik-background2.jpg' %});#}{#background-position: center;#}{#background-size: cover;#} transition: height 999999s;
             color: white;
             position: relative;
         }
 
         .header-inside {
+            min-height: 45vh;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .header::before {
             content: "";
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; min-height: 40vh;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 45vh;
             background-image: url({% static 'img/levstik-background.jpg' %});
             background-position: center;
             background-size: cover;
@@ -56,8 +241,8 @@
         }
 
         .primary {
-            background: rgb(45,8,12);
-            background: linear-gradient(90deg, rgba(45,8,12,1) 0%, rgba(54,10,10,1) 15%, rgb(66, 9, 18) 50%, rgba(54,10,10,1) 85%, rgba(45,8,12,1) 100%);
+            background: rgb(45, 8, 12);
+            background: linear-gradient(90deg, rgba(45, 8, 12, 1) 0%, rgba(54, 10, 10, 1) 15%, rgb(66, 9, 18) 50%, rgba(54, 10, 10, 1) 85%, rgba(45, 8, 12, 1) 100%);
         }
 
         .card:hover {
@@ -67,79 +252,215 @@
         }
 
         h1, h2 {
-            text-transform: uppercase;
             font-weight: bold;
         }
 
-        .main-title {
-            font-family: 'Raleway', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 24px;
+        .timeline {
+            position: relative;
+            padding: 0;
+            list-style: none;
+        }
+
+        .timeline:before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 40px;
+            width: 2px;
+            margin-left: -1.5px;
+            content: '';
+            background-color: #e9ecef;
+        }
+
+        .timeline > li {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 50px;
+        }
+
+        .timeline > li:after, .timeline > li:before {
+            display: table;
+            content: ' ';
+        }
+
+        .timeline > li:after {
+            clear: both;
+        }
+
+        .timeline > li:hover,
+        .timeline-image:hover {
+            content: "";
+            transform: scale(1.1);
+            transition: transform 0.1s;
+            cursor: pointer;
+        }
+
+        .timeline > li .timeline-panel {
+            position: relative;
+            float: right;
+            width: 100%;
+            padding: 0 20px 0 100px;
+            text-align: left;
+        }
+
+        .timeline > li .timeline-panel:before {
+            right: auto;
+            left: -15px;
+            border-right-width: 15px;
+            border-left-width: 0;
+        }
+
+        .timeline > li .timeline-panel:after {
+            right: auto;
+            left: -14px;
+            border-right-width: 14px;
+            border-left-width: 0;
+        }
+
+        .timeline > li .timeline-image {
+            position: absolute;
+            z-index: 100;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            margin-left: 0;
+            text-align: center;
+            color: white;
+            border: 7px solid #e9ecef;
+            border-radius: 100%;
+            background-color: #fed136;
+            object-fit: cover;
+        }
+
+        .timeline > li .timeline-image h4 {
+            font-size: 10px;
+            line-height: 14px;
+            margin-top: 12px;
+        }
+
+        .timeline > li.timeline-inverted > .timeline-panel {
+            float: right;
+            padding: 0 20px 0 100px;
+            text-align: left;
+        }
+
+        .timeline > li.timeline-inverted > .timeline-panel:before {
+            right: auto;
+            left: -15px;
+            border-right-width: 15px;
+            border-left-width: 0;
+        }
+
+        .timeline > li.timeline-inverted > .timeline-panel:after {
+            right: auto;
+            left: -14px;
+            border-right-width: 14px;
+            border-left-width: 0;
+        }
+
+        .timeline > li:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline .timeline-heading h4 {
+            margin-top: 0;
+            color: inherit;
+        }
+
+        .timeline .timeline-heading h4.subheading {
+            text-transform: none;
+        }
+
+        .timeline .timeline-body > ul,
+        .timeline .timeline-body > p {
+            margin-bottom: 0;
+        }
+
+        @media (min-width: 768px) {
+            .timeline:before {
+                left: 50%;
+            }
+
+            .timeline > li {
+                min-height: 100px;
+                margin-bottom: 100px;
+            }
+
+            .timeline > li .timeline-panel {
+                float: left;
+                width: 41%;
+                padding: 0 20px 20px 30px;
+                text-align: right;
+            }
+
+            .timeline > li .timeline-image {
+                left: 50%;
+                width: 100px;
+                height: 100px;
+                margin-left: -50px;
+            }
+
+            .timeline > li .timeline-image h4 {
+                font-size: 13px;
+                line-height: 18px;
+                margin-top: 16px;
+            }
+
+            .timeline > li.timeline-inverted > .timeline-panel {
+                float: right;
+                padding: 0 30px 20px 20px;
+                text-align: left;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .timeline > li {
+                min-height: 150px;
+            }
+
+            .timeline > li .timeline-panel {
+                padding: 0 20px 20px;
+            }
+
+            .timeline > li .timeline-image {
+                width: 150px;
+                height: 150px;
+                margin-left: -75px;
+            }
+
+            .timeline > li .timeline-image h4 {
+                font-size: 18px;
+                line-height: 26px;
+                margin-top: 30px;
+            }
+
+            .timeline > li.timeline-inverted > .timeline-panel {
+                padding: 0 20px 20px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .timeline > li {
+                min-height: 170px;
+            }
+
+            .timeline > li .timeline-panel {
+                padding: 0 20px 20px 100px;
+            }
+
+            .timeline > li .timeline-image {
+                width: 170px;
+                height: 170px;
+                margin-left: -85px;
+            }
+
+            .timeline > li .timeline-image h4 {
+                margin-top: 40px;
+            }
+
+            .timeline > li.timeline-inverted > .timeline-panel {
+                padding: 0 100px 20px 20px;
+            }
         }
     </style>
-{% endblock %}
-
-{% block navbar %}
-    <div class="header">
-        <div class="header-inside">
-            <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
-                <h5 class="my-0 mr-md-auto main-title">
-                    <a href="{% url 'home' %}">
-                        <img src="{% static 'img/favicon-trans.png' %}" height="45px" class="mb-3 mr-2" style="position: relative; top: 7px;">
-                        Levstik.si
-                    </a>
-                </h5>
-                <nav class="mr-md-3">
-                    <a class="p-2" href="{% url 'home' %}">Domov</a>
-                    <a class="p-2" href="{% url 'winners' %}">Dobitniki</a>
-
-                    {% if user.is_authenticated %}
-                        <a class="p-2" href="{% url 'profile' %}">Profil</a>
-                        <a class="btn btn-primary" href="{% url 'logout' %}">Odjava</a>
-                    {% else %}
-                        <a class="btn btn-primary" href="{% url 'register' %}">Registracija</a>
-                        <a class="btn btn-primary ml-1" href="{% url 'login' %}">Prijava</a>
-                    {% endif %}
-                </nav>
-            </div>
-            <div class="container text-center pt-3 pb-3">
-                <div class="col-md-12">
-                    <h1>Dobitniki Levstikove nagrade</h1>
-                </div>
-                <div class="col-md-12 pt-3 pb-3">
-                    <h5>
-                        Levstikova nagrada je nagrada, ki jo od leta 1949 Založba Mladinska knjiga podeljuje za dosežke na področju otroške in mladinske književnosti avtorjem, ki objavljajo pri tej založbi. Do leta 1991 so nagrado podeljevali enkrat letno, od tedaj pa bienalno.
-                    </h5>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
-
-{% block content %}
-    <div class="container-fluid">
-        <div class="row primary pb-5">
-            <div class="col-md-12 text-center mt-5 mb-5">
-                <h2 class="mb-0" style="color: white">
-                    Dobitniki nagrade
-                </h2>
-            </div>
-            <div class="col-md-12">
-                <div class="card-deck">
-                    {% for winner in winners %}
-                        <div class="card">
-                            <img class="card-img-top" src="{% static 'img/levstik2.jpg' %}" alt="Dobitnik">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ winner.full_name }}</h5>
-                                <p class="card-text">{{ winner.description }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-
 {% endblock %}

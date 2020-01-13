@@ -6,13 +6,14 @@ class CreateWinnerForm(ModelForm):
 
     class Meta:
         model = Winner
-        fields = ['first_name', 'last_name', 'birth_date', 'awarded_date', 'description']
+        fields = ['first_name', 'last_name', 'birth_date', 'awarded_date', 'description', 'image']
         labels = dict(
             first_name="Ime",
             last_name="Priimek",
             birth_date="Datum rojstva",
             awarded_date="Datum prejema nagrade",
-            description="Opis"
+            description="Opis",
+            image="Slika"
         )
 
     def __init__(self, *args, **kwargs):

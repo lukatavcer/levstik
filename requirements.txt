@@ -6,3 +6,4 @@ gunicorn
 whitenoise
 django-heroku
 django-allauth
+Pillow==7.0.0
