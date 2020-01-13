@@ -257,7 +257,7 @@ ul.errorlist li {
 h1, h2, h3 {
     color: #6e1119;
 }
-a:hover {
+a:not(.btn):hover {
     color: #fed136 !important;
 }
 

@@ -19,5 +19,5 @@ class WinnerProfileView(View):
             winner=winner
         )
 
-        template = "winner_profile/winner_profile.html"
+        template = "winners/winner_profile.html"
         return render(request, template, context)

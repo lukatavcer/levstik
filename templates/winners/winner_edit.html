@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static i18n humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-md-8 offset-md-2">
+                <div class="row">
+                    <div class="col-12 mb-3 text-sm-left text-center">
+                        <h2>Uredi nagrajenca</h2>
+                    </div>
+                </div>
+                <form class="form " action="{% url 'edit_winner' form.instance.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="card border-light">
+                        <div class="card-body">
+                            {% for field in form.visible_fields %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-8 offset-sm-2">
+                                            <strong>
+                                                {{ field.label_tag }}
+                                            </strong>
+                                            {{ field }}
+                                            {{ field.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8 col-sm-6 mt-3 mb-3 offset-sm-6 offset-2">
+                            <button class="nextButton btn btn-primary">
+                                Shrani
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/datetimepicker/locales/sl.js' %}"></script>
+    <script src="{% static 'plugins/filer/js/jquery.filer.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            let options = {
+                limit: 1,
+                maxSize: 5,
+                showThumbs: true
+            };
+            $("#id_image").filer( options );
+
+            $('#id_birth_date, #id_awarded_date').datetimepicker({
+                sideBySide: true,
+                format: 'D. M. YYYY',
+                locale: 'sl',
+                viewMode: "years",
+            });
+        });
+
+    </script>
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link href="{% static 'plugins/filer/css/jquery.filer.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'plugins/filer/css/themes/jquery.filer-dragdropbox-theme.css' %}" type="text/css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"
+          integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .jFiler-input {
+            width: 100% !important;
+        }
+
+        .nextButton {
+            min-height: 42px;
+            width: 100%;
+            border-radius: 3px;
+            border-color: #4cb994;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: #ffffff;
+            -webkit-appearance: none;
+            background-repeat: no-repeat;
+            background-size: 9px 14px;
+            background-position: right 13px center;
+            transition: .5s;
+        }
+    </style>
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -13,7 +13,7 @@ def max_file_size(image):
 
 def file_path(instance, filename):
     ext = filename.split('.')[-1]
-    return 'images/{}.{}'.format(instance.slug_title, ext)
+    return 'images/{}.{}'.format(instance.slug_name, ext)
 
 
 class Winner(models.Model):
@@ -36,6 +36,10 @@ class Winner(models.Model):
     @property
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+    @property
+    def slug_name(self):
+        return slugify(self.full_name)
 
     @property
     def slug_title(self):

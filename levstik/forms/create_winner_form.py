@@ -23,6 +23,11 @@ class CreateWinnerForm(ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 
+        if self.initial.get('awarded_date'):
+            self.initial['awarded_date'] = self.initial['awarded_date'].strftime("%-d. %-m. %Y")
+        if self.initial.get('birth_date'):
+            self.initial['birth_date'] = self.initial['birth_date'].strftime("%-d. %-m. %Y")
+
     def save(self, commit=True):
         instance = super(CreateWinnerForm, self).save(commit=False)
         instance.created_by = self.created_by

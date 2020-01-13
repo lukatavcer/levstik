@@ -4,10 +4,16 @@
 
 {% block content %}
 <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+
     <img class="avatar-image rounded-circle img-fluid" src="{{ winner.image.url }}" alt="">
     <h1 class="display-4 cursive">
         {{ winner.full_name }}
     </h1>
+    {%  if user.is_authenticated %}
+        <div class="mb-4">
+            <a href="{% url 'edit_winner' winner.id %}" class="btn btn-primary">Uredi nagrajenca</a>
+        </div>
+    {% endif %}
     <div class="timeline-panel">
         <div class="timeline-heading">
             <h5 class="text-muted">{{ winner.awarded_date|date:"F Y" }}</h5>
