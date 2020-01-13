@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+{% block content %}
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <img class="avatar-image rounded-circle img-fluid" src="{{ winner.image.url }}" alt="">
+    <h1 class="display-4 cursive">
+        {{ winner.full_name }}
+    </h1>
+    <div class="timeline-panel">
+        <div class="timeline-heading">
+            <h5 class="text-muted">{{ winner.awarded_date|date:"F Y" }}</h5>
+        </div>
+        <div class="timeline-body">
+            <p class="text-muted">{{ winner.description }}</p>
+        </div>
+    </div>
+    {% if profile.description %}
+        <p class="lead">{{ profile.description }}</p>
+    {% endif %}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body p-0 mx-auto">
+                <img src=""  id="avatarModalImg" alt="Slika nagrajenca">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script>
+        $('.avatar-image').click(function showModal() {
+            console.log($(this)[0].src);
+            $('#avatarModalImg').attr('src', $(this)[0].src);
+            $('#avatarModal').modal('show');
+        });
+    </script>
+{% endblock %}
+
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"
+          integrity="sha256-bLNUHzSMEvxBhoysBE7EXYlIrmo7+n7F4oJra1IgOaM=" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+
+    <style>
+        .modal-content {
+            width: auto !important;
+            margin: auto;
+        }
+
+        .modal .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 10;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .avatar-image {
+            vertical-align: middle;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+{% endblock %}

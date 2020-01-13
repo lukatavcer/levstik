@@ -255,8 +255,12 @@ ul.errorlist li {
 }
 
 h1, h2, h3 {
-    color: #480a11;
+    color: #6e1119;
 }
+a:hover {
+    color: #fed136 !important;
+}
+
 .main-title {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;

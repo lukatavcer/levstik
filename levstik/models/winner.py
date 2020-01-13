@@ -43,4 +43,4 @@ class Winner(models.Model):
 
     @property
     def url(self):
-        return "http://{}/{}/".format(settings.BASE_URL, self.slug_title)
+        return "http://{}/winner/{}/".format(settings.BASE_URL, self.slug_title)
