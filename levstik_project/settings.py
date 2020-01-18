@@ -21,8 +21,8 @@ SECRET_KEY = "*b$)914m^gn@t@n$+#o!p%m=%)5*zq50gt-f+jp43ta06be04x"
 
 ALLOWED_HOSTS += ['127.0.0.1', '0.0.0.0', 'dev-levstik.si']
 
-BASE_URL = 'dev-levstik.si:8080'
+# BASE_URL = 'dev-levstik.si:8080'
 
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SECURE_SSL_REDIRECT = False
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SECURE_SSL_REDIRECT = False
