@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 from django.conf.global_settings import DATETIME_INPUT_FORMATS
 import os
+import django_heroku
 
 
 BASE_URL = 'levstik.si'
@@ -29,7 +30,7 @@ SECRET_KEY = 'v$+i!*pi8x@v7wvy_#4fuichq)$!upt@a2ek#*bz538^z#31#2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['levstik.herokuapp.com']
 
 # Application definition
 
@@ -211,8 +212,8 @@ LOGGING = {
     }
 }
 
-
-# django_heroku.settings(locals())
+# Heroku
+django_heroku.settings(locals())
 
 DATETIME_INPUT_FORMATS += ("%d. %m. %Y",)
 
